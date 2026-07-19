@@ -1,0 +1,15 @@
+{
+  "short_name": "Ifeoluwa",
+  "name": "Ifeoluwa Adebowale Portfolio",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0b0d0e",
+  "background_color": "#ffffff"
+}
