@@ -1,14 +1,15 @@
-import { ArrowRightIcon, LightningIcon } from "@phosphor-icons/react";
+import { LightningIcon } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { GlowCardGrid } from "#/components/glow-card-grid";
 import { HoverGlowCard } from "#/components/hover-glow-card";
 import { BotIcon } from "#/components/ui/bot";
 import { BriefcaseBusinessIcon } from "#/components/ui/briefcase-business";
+import { ArrowRightIcon } from "#/components/ui/arrow-right";
 import { buttonVariants } from "#/components/ui/button";
-import { ChartLineIcon } from "#/components/ui/chart-line";
 import { focusAreas, heroStats, profile } from "#/lib/portfolio-data";
 import { cn } from "#/lib/utils";
+import { ActivityIcon } from "#/components/ui/activity";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -74,7 +75,7 @@ function Home() {
 											Full-stack product systems
 										</h2>
 									</div>
-									<ChartLineIcon className="text-primary" size={36} />
+									<ActivityIcon className="text-primary" size={36} />
 								</div>
 								<div className="grid grid-cols-3 gap-3">
 									{heroStats.map((stat) => (

@@ -1,11 +1,12 @@
-import { ArrowUpRightIcon, MapPinIcon } from "@phosphor-icons/react";
-import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
 import { GlowCardGrid } from "#/components/glow-card-grid";
 import { HoverGlowCard } from "#/components/hover-glow-card";
 import { ThemeToggle } from "#/components/theme-toggle";
 import { AArrowUpIcon } from "#/components/ui/a-arrow-up";
+import { ArrowUpRightIcon } from "#/components/ui/arrow-up-right";
+import { MapPinIcon } from "#/components/ui/map-pin";
 import { buttonVariants } from "#/components/ui/button";
 import { contactLinks, profile } from "#/lib/portfolio-data";
 import { cn } from "#/lib/utils";
@@ -97,7 +98,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 function Footer() {
 	return (
 		<footer
-			className="relative z-10 border-foreground/10 mt-50 border-t bg-background/10 p-4 backdrop-blur-xl sm:px-6"
+			className="relative z-10 border-foreground/10 mt-30 border-t bg-background/10 p-4 backdrop-blur-xl sm:px-6"
 			id="contact"
 		>
 			<motion.div
@@ -108,7 +109,7 @@ function Footer() {
 				whileInView={{ opacity: 1, y: 0 }}
 			>
 				<div>
-					<p className="mb-4 flex items-center gap-2 text-muted-foreground text-sm">
+					<p className="mb-4 flex items-center gap-2 text-muted-foreground text-sm [&_svg]:size-4">
 						<MapPinIcon className="size-4" />
 						{profile.location}
 					</p>
@@ -143,9 +144,9 @@ function Footer() {
 								<span className="flex items-center gap-2 text-left">
 									<span className="[&_svg]:size-4">{link.icon}</span>
 									<span>
-										<span className="block font-semibold text-sm">
+										{/* <span className="block font-semibold text-sm">
 											{link.label}
-										</span>
+										</span> */}
 										<span className="block text-muted-foreground text-xs">
 											{link.value}
 										</span>

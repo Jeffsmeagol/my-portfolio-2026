@@ -1,8 +1,5 @@
 import {
 	DeviceMobileIcon,
-	EnvelopeIcon,
-	GithubLogoIcon,
-	LinkedinLogoIcon,
 	ShieldCheckIcon,
 } from "@phosphor-icons/react";
 import { BotIcon } from "#/components/ui/bot";
@@ -11,6 +8,20 @@ import { ChartLineIcon } from "#/components/ui/chart-line";
 import { GraduationCapIcon } from "#/components/ui/graduation-cap";
 import { PhoneIcon } from "#/components/ui/phone";
 import type { ExperienceItemType } from "#/components/work-experience";
+import { CloudCogIcon } from "#/components/ui/cloud-cog";
+import { BrainIcon } from "#/components/ui/brain";
+import { AtSignIcon } from "#/components/ui/at-sign";
+import { GithubIcon } from "#/components/ui/github";
+import { LinkedinIcon } from "#/components/ui/linkedin";
+import { AirplayIcon } from "#/components/ui/airplay";
+import { CpuIcon } from "#/components/ui/cpu";
+import { BoxesIcon } from "#/components/ui/boxes";
+import { BlocksIcon } from "#/components/ui/blocks";
+import { CogIcon } from "#/components/ui/cog";
+import { CreditCardIcon } from "#/components/ui/credit-card";
+import { ConnectIcon } from "#/components/ui/connect";
+import { WorkflowIcon } from "#/components/ui/workflow";
+import { LaptopMinimalCheckIcon } from "#/components/ui/laptop-minimal-check";
 
 export const profile = {
 	name: "Ifeoluwa Adebowale",
@@ -30,7 +41,7 @@ export const contactLinks = [
 		label: "Email",
 		value: profile.email,
 		href: `mailto:${profile.email}`,
-		icon: <EnvelopeIcon />,
+		icon: <AtSignIcon />,
 	},
 	{
 		label: "Phone",
@@ -42,13 +53,13 @@ export const contactLinks = [
 		label: "GitHub",
 		value: "github.com/Jeffsmeagol",
 		href: profile.github,
-		icon: <GithubLogoIcon />,
+		icon: <GithubIcon />,
 	},
 	{
 		label: "LinkedIn",
 		value: "linkedin.com/in/ifeoluwa-adebowale/377779112",
 		href: profile.linkedin,
-		icon: <LinkedinLogoIcon />,
+		icon: <LinkedinIcon />,
 	},
 ];
 
@@ -63,7 +74,7 @@ export const focusAreas = [
 		title: "Product Engineering",
 		description:
 			"React, Next.js, TanStack Router/Start/Query, TypeScript, shadcn/ui, React Native, Kotlin, SwiftUI, and product flows that survive real users and regulated operations.",
-		icon: <BriefcaseBusinessIcon />,
+		icon: <BrainIcon />,
 	},
 	{
 		title: "Platforms & Data",
@@ -75,7 +86,7 @@ export const focusAreas = [
 		title: "Cloud, Reliability & AI",
 		description:
 			"AWS, Cloudflare, Docker, Kubernetes, CI/CD, observability, serverless, object storage, databases, AI integration, and uptime habits shaped by financial infrastructure work.",
-		icon: <BotIcon />,
+		icon: <CloudCogIcon />,
 	},
 ];
 
@@ -91,7 +102,7 @@ export const workExperiences: ExperienceItemType[] = [
 				title: "Software Engineer",
 				employmentPeriod: { start: "12.2025" },
 				employmentType: "Lagos, Nigeria",
-				icon: <BriefcaseBusinessIcon />,
+				icon: <BlocksIcon />,
 				isExpanded: true,
 				description:
 					"I work on digital solutions and managed-service products for insurance and internal operations teams. On **Aktuarial**, a multi-tenant Insurance Brokerage Management System for brokers and agents, I have owned work across the UI, middleware, validations, business-creation logic, data-model rewrites, migrations, and backfills. I recently led a major redesign of the legacy dashboard into a dense analytics experience with multiple data segments and websocket-driven updates, and helped integrate a multi-branch model so insurance businesses can open, close, and operate across several branches.\n\nI also bootstrapped a new internal tenant-operations app used to view, support, add, investigate, and troubleshoot broker tenants and users. The work sits close to product, support, and engineering: I collaborate with senior engineers on management-prioritized delivery, while also breaking down tasks for junior engineers and interns so the team keeps moving toward the organization's goals.",
@@ -123,7 +134,7 @@ export const workExperiences: ExperienceItemType[] = [
 				title: "Senior Full-Stack Developer",
 				employmentPeriod: { start: "04.2024", end: "11.2025" },
 				employmentType: "Remote Contract",
-				icon: <BriefcaseBusinessIcon />,
+				icon: <CogIcon />,
 				description:
 					"Delivered full-stack products for startups and business teams, usually stepping into the ambiguous space between product needs, architecture, and implementation. I built React, Next.js, TanStack, TypeScript, Node.js, and NestJS applications; modernized legacy systems with zero-downtime migration plans; improved load and query performance by 50%+ in key flows; and implemented secure authentication with AuthJS, Passport.js, JWT, and OAuth.\n\nI have also integrated AI features into existing products, cleaned up AI-assisted codebases, and refactored brittle integrations into maintainable application services.",
 				skills: [
@@ -159,7 +170,7 @@ export const workExperiences: ExperienceItemType[] = [
 				title: "Full-Stack Engineer",
 				employmentPeriod: { start: "04.2024", end: "07.2024" },
 				employmentType: "Lagos, Nigeria",
-				icon: <ChartLineIcon />,
+				icon: <BriefcaseBusinessIcon />,
 				description:
 					"Worked across client, admin, and backend applications, helping move product ideas into reliable services. I contributed to multi-country payment integrations, product delivery services for inventory workflows, SMS/email notification services, and deployment pipelines. The role required clean TypeScript boundaries, backend judgment, and the ability to keep several product surfaces aligned at once.",
 				skills: [
@@ -235,7 +246,7 @@ export const workExperiences: ExperienceItemType[] = [
 export const skillGroups = [
 	{
 		title: "Frontend",
-		icon: <BriefcaseBusinessIcon />,
+		icon: <AirplayIcon />,
 		items: [
 			"JavaScript",
 			"TypeScript",
@@ -261,7 +272,7 @@ export const skillGroups = [
 	},
 	{
 		title: "Backend & Data",
-		icon: <ChartLineIcon />,
+		icon: <CpuIcon />,
 		items: [
 			"Node.js",
 			"Express.js",
@@ -290,7 +301,7 @@ export const skillGroups = [
 	},
 	{
 		title: "Cloud, AI & Tools",
-		icon: <BotIcon />,
+		icon: <BoxesIcon />,
 		items: [
 			"AWS",
 			"Azure",
@@ -334,7 +345,7 @@ export const projects = [
 		impact:
 			"Built the fintech discipline needed for transaction-heavy products where trust, traceability, and recovery matter.",
 		tags: ["Fintech", "Payments", "SRE", "Observability"],
-		icon: <ChartLineIcon />,
+		icon: <CreditCardIcon />,
 	},
 	{
 		title: "Aktuarial Analytics Dashboard",
@@ -354,7 +365,7 @@ export const projects = [
 		impact:
 			"Gave support and engineering teams a faster path to inspect, assist, and resolve tenant issues.",
 		tags: ["Internal Tools", "Multi-tenancy", "Support", "Platform Ops"],
-		icon: <BriefcaseBusinessIcon />,
+		icon: <LaptopMinimalCheckIcon />,
 	},
 	{
 		title: "Multi-Branch Brokerage System",
@@ -364,7 +375,7 @@ export const projects = [
 		impact:
 			"Expanded the product model for larger, more operationally complex brokerage businesses.",
 		tags: ["Business Logic", "Validation", "Data Models", "Middleware"],
-		icon: <BriefcaseBusinessIcon />,
+		icon: <ConnectIcon />,
 	},
 	{
 		title: "Legacy System Modernization",
@@ -374,7 +385,7 @@ export const projects = [
 		impact:
 			"Improved performance by 50%+ in targeted flows while making the codebase easier to extend.",
 		tags: ["React.js", "Node.js", "TypeScript", "Backfills"],
-		icon: <ChartLineIcon />,
+		icon: <WorkflowIcon />,
 	},
 	{
 		title: "AI-Assisted Product Integrations",
