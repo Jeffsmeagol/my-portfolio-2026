@@ -50,7 +50,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 						</Link>
 
 						<div className="flex items-center gap-2">
-							<div className="hidden glass-pill p-1 shadow-sm sm:flex">
+							<div className="glass-pill p-1 shadow-sm flex">
 								{navItems.map((item) => (
 									<Link
 										className={cn(
