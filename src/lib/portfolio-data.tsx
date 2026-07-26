@@ -64,7 +64,7 @@ export const contactLinks = [
 ];
 
 export const heroStats = [
-	{ value: "5+", label: "years building production systems" },
+	{ value: "6+", label: "years building production systems" },
 	{ value: "99.99%", label: "uptime-minded engineering culture" },
 	{ value: "50%+", label: "performance gains on modernization work" },
 ];

@@ -25,7 +25,7 @@ function Home() {
 					>
 						<p className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 font-medium text-primary text-xs uppercase tracking-[0.25em]">
 							<LightningIcon className="size-4" />
-							5+ years across product, fintech, cloud, and reliability
+							6+ years across product, fintech, cloud, and reliability
 						</p>
 						<h1 className="max-w-4xl text-5xl font-black tracking-tight text-balance sm:text-6xl lg:text-7xl">
 							I build serious software for teams that need senior ownership.
