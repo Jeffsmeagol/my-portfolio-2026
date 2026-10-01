@@ -74,13 +74,15 @@ const ArrowRightIcon = forwardRef<ArrowRightIconHandle, ArrowRightIconProps>(
     );
 
     return (
+      // biome-ignore lint/a11y/noStaticElementInteractions: Decorative icon animation; the parent supplies the control and accessible name.
       <div
+        aria-hidden="true"
         className={cn(className)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         {...props}
       >
-        <svg
+        <svg aria-hidden="true" focusable="false"
           fill="none"
           height={size}
           stroke="currentColor"

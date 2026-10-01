@@ -1,88 +1,109 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
-  cloneElement,
-  isValidElement,
-  type ReactElement,
-  type ReactNode,
-  useRef,
+	type CSSProperties,
+	cloneElement,
+	isValidElement,
+	type ReactElement,
+	type ReactNode,
+	useRef,
 } from "react";
+import { GlowCardEffects } from "#/components/glow-card-grid";
 import { cn } from "#/lib/utils";
 
 export type AnimatedIconHandle = {
-  startAnimation: () => void;
-  stopAnimation: () => void;
+	startAnimation: () => void;
+	stopAnimation: () => void;
 };
-
 type HoverGlowCardProps = {
-  children: ReactNode;
-  className?: string;
-  icon?: ReactNode;
-  iconClassName?: string;
-  iconWrapperClassName?: string;
-  iconSize?: number;
-  hoverLift?: boolean;
-  disableHoverGlow?: boolean;
+	children: ReactNode;
+	className?: string;
+	contentClassName?: string;
+	icon?: ReactNode;
+	iconClassName?: string;
+	iconWrapperClassName?: string;
+	iconSize?: number;
+	hoverLift?: boolean;
+	disableHoverGlow?: boolean;
+	glowColor?: string;
+	id?: string;
 };
-
 type IconProps = {
-  ref?: React.Ref<AnimatedIconHandle>;
-  className?: string;
-  size?: number;
+	ref?: React.Ref<AnimatedIconHandle>;
+	className?: string;
+	size?: number;
 };
 
 export function HoverGlowCard({
-  children,
-  className,
-  icon,
-  iconClassName,
-  iconWrapperClassName,
-  iconSize = 24,
-  hoverLift = true,
-  disableHoverGlow = false,
+	children,
+	className,
+	contentClassName,
+	icon,
+	iconClassName,
+	iconWrapperClassName,
+	iconSize = 24,
+	hoverLift = false,
+	disableHoverGlow = false,
+	glowColor = "var(--primary)",
+	id,
 }: HoverGlowCardProps) {
-  const iconRef = useRef<AnimatedIconHandle>(null);
-
-  const animatedIcon =
-    isValidElement(icon) &&
-    cloneElement(icon as ReactElement<IconProps>, {
-      ref: iconRef,
-      size: iconSize,
-      className: cn((icon.props as IconProps).className, iconClassName),
-    });
-
-  return (
-    <motion.article
-      data-slot="glow-card"
-      className={cn(
-        "glass-panel group relative isolate overflow-hidden p-6 transition-colors",
-        "ring-1 ring-border/60 [clip-path:inset(0_round_var(--card-radius,16px))]",
-        !disableHoverGlow &&
-          "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-[radial-gradient(circle_at_calc((var(--pointer-x,0)+1)*50%)_calc((var(--pointer-y,0)+1)*50%),color-mix(in_oklch,var(--primary),transparent_76%),transparent_42%)] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100",
-        "after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-white/20 after:opacity-60",
-        className,
-      )}
-      onHoverStart={() => iconRef.current?.startAnimation?.()}
-      onHoverEnd={() => iconRef.current?.stopAnimation?.()}
-      whileHover={
-        hoverLift
-          ? {
-              y: -4,
-              transition: { duration: 0.18, ease: "easeOut" },
-            }
-          : undefined
-      }
-    >
-      {animatedIcon ? (
-        <div
-          className={cn(
-            "mb-10 flex size-12 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary",
-            iconWrapperClassName,
-          )}
-        >
-          {animatedIcon}
-        </div>
-      ) : null}
-      {children}
-    </motion.article>
-  );
+	const iconRef = useRef<AnimatedIconHandle>(null);
+	const reducedMotion = useReducedMotion();
+	const animatedIcon =
+		isValidElement(icon) &&
+		cloneElement(icon as ReactElement<IconProps>, {
+			ref: iconRef,
+			size: iconSize,
+			className: cn((icon.props as IconProps).className, iconClassName),
+		});
+	const artwork = isValidElement(icon) ? (
+		cloneElement(icon as ReactElement<IconProps>, {
+			ref: undefined,
+			size: 80,
+			className: "size-20",
+		})
+	) : (
+		<span className="size-20 rounded-full bg-current" />
+	);
+	return (
+		<motion.article
+			id={id}
+			data-slot="glow-card"
+			data-glow-disabled={disableHoverGlow || undefined}
+			className={cn(
+				"glass-panel glow-card group relative isolate h-full overflow-hidden p-6",
+				className,
+			)}
+			style={{ "--glow-color": glowColor } as CSSProperties}
+			onHoverStart={() => {
+				if (!reducedMotion) iconRef.current?.startAnimation?.();
+			}}
+			onHoverEnd={() => iconRef.current?.stopAnimation?.()}
+			whileHover={
+				hoverLift && !reducedMotion
+					? { y: -4, transition: { duration: 0.18 } }
+					: undefined
+			}
+		>
+			{!disableHoverGlow && <GlowCardEffects artwork={artwork} />}
+			<div
+				className={cn(
+					"relative z-10 flex h-full min-w-0 flex-col",
+					contentClassName,
+				)}
+			>
+				{animatedIcon && (
+					<div
+						aria-hidden="true"
+						className={cn(
+							"mb-6 flex size-12 shrink-0 items-center justify-center rounded-xl border border-current/20 bg-current/5 text-(--glow-color)",
+							iconWrapperClassName,
+						)}
+					>
+						{animatedIcon}
+					</div>
+				)}
+				{children}
+			</div>
+		</motion.article>
+	);
 }

@@ -82,6 +82,7 @@ const MapPinIcon = forwardRef<MapPinIconHandle, MapPinIconProps>(
 		);
 
 		return (
+			// biome-ignore lint/a11y/noStaticElementInteractions: Decorative hover animation, not an interactive control.
 			<span
 				className={cn(className)}
 				onMouseEnter={handleMouseEnter}

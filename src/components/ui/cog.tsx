@@ -51,7 +51,9 @@ const CogIcon = forwardRef<CogIconHandle, CogIconProps>(
       [controls, onMouseLeave]
     );
     return (
+      // biome-ignore lint/a11y/noStaticElementInteractions: Decorative icon animation; the parent supplies the control and accessible name.
       <div
+        aria-hidden="true"
         className={cn(className)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

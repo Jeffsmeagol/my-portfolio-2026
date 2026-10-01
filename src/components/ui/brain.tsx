@@ -109,7 +109,9 @@ const BrainIcon = forwardRef<BrainIconHandle, BrainIconProps>(
     );
 
     return (
+      // biome-ignore lint/a11y/noStaticElementInteractions: Decorative icon animation; the parent supplies the control and accessible name.
       <div
+        aria-hidden="true"
         className={cn(className)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
