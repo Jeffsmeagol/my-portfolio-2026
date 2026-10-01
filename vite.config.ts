@@ -5,9 +5,16 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-const config = defineConfig({
+const config = defineConfig(({ command }) => ({
 	resolve: { tsconfigPaths: true },
-	plugins: [devtools(), netlify(), tailwindcss(), tanstackStart(), viteReact()],
-});
+	// Local development needs no Netlify services or account connection.
+	plugins: [
+		devtools(),
+		command === "build" && netlify(),
+		tailwindcss(),
+		tanstackStart(),
+		viteReact(),
+	],
+}));
 
 export default config;
