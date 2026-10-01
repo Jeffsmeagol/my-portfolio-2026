@@ -1,217 +1,45 @@
-Welcome to your new TanStack Start app! 
+# Ifeoluwa Adebowale — Portfolio
 
-# Getting Started
+A recruiter-facing portfolio built with React, TypeScript, TanStack Start/Router, Tailwind CSS, and Motion. It includes a homepage, selected work, an experience timeline, a technical toolkit, and contact links.
 
-To run this application:
+## Local development
 
-```bash
-npm install
+```sh
+npm ci
 npm run dev
+# If port 3000 is occupied:
+npm run dev -- --port 3100
 ```
 
-# Building For Production
+The Netlify adapter is used for production builds; ordinary local development does not require a Netlify account or service connection.
 
-To build this application for production:
+## Verification
 
-```bash
+```sh
+npx tsc --noEmit
+npm run lint
+npm test
 npm run build
 ```
 
-## Testing
+Vitest runs with a separate configuration so component tests do not start Netlify or the application server. The regression tests cover glow positioning, frame batching, pointer exit, reduced-motion/touch behavior, scroll/unmount cleanup, shared effects, and first-paint theme selection with blocked storage.
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+## Updating content
 
-```bash
-npm run test
-```
+Edit `src/lib/portfolio-data.tsx` for profile/contact URLs, experience, education, project summaries, and skills. The homepage features the analytics dashboard, tenant operations tool, and Interswitch reliability work. `ProjectCard` is shared with the experience page.
 
-## Styling
+Keep role titles and dates accurate. Tie numerical outcomes to a project, baseline, measurement, and your contribution. Add public demos, source links, and employer-approved screenshots only when available; do not imply that private work has a public demo.
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## Glow cards
 
-### Removing Tailwind CSS
+`GlowCardGrid` sets shared effect variables and tracks pointer coordinates. `HoverGlowCard` and the avatar-style `GlowCard` use the same `GlowCardEffects` layers: blurred artwork behind content and a masked backdrop-filter border. No fixed height or size containment is required for content cards.
 
-If you prefer not to use Tailwind CSS:
+Use `glowColor` on content cards to set the artwork color. The default radius is 16px and glow-border width is 3px, matching the reference defaults. All grid effect props feed the shared CSS layers in `src/styles.css`. Touch/coarse-pointer and reduced-motion input skip pointer tracking; keyboard focus has a static highlight. `disableHoverGlow` opts a content card out.
 
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
+Adapted from [Chánh Đại’s Glow Card Grid](https://chanhdai.com/components/glow-card-grid), credited to Chánh Đại and inspired by @jh3yy. The upstream MIT notice is retained in `licenses/chanhdai-MIT.txt`.
 
-## Linting & Formatting
+## Deployment
 
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
+`npm run build` produces `dist/client` and the Netlify SSR handler. `netlify.toml` contains the existing Netlify configuration. Deploy through the existing site workflow; local edits do not publish automatically.
 
-
-```bash
-npm run lint
-npm run format
-npm run check
-```
-
-
-## Deploy to Netlify
-
-This project ships with `netlify.toml` configured for a Netlify site:
-
-1. Push this repo to GitHub
-2. Visit https://app.netlify.com/start and import the repo
-3. Netlify auto-detects the build (`vite build` → `dist/client`)
-4. Open **Site settings → Environment variables** and add anything from `.env.example` that needs a real value in production
-5. Trigger the first deploy
-
-Server functions and API routes run on Netlify Functions. For lower-latency request handling, see Netlify Edge Functions: https://docs.netlify.com/edge-functions/overview.
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+Review notes and screenshots from the September 2026 improvement pass are in `output/review/REVIEW.md`.
