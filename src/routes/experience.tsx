@@ -1,22 +1,9 @@
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CheckCircleIcon,
-} from "@phosphor-icons/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { ArrowDown, FileText } from "lucide-react";
 import { GlowCardGrid } from "#/components/glow-card-grid";
 import { HoverGlowCard } from "#/components/hover-glow-card";
-import { BriefcaseBusinessIcon } from "#/components/ui/briefcase-business";
-import {
-	Carousel,
-	type CarouselApi,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "#/components/ui/carousel";
+import { ProjectCard } from "#/components/project-card";
+import { buttonVariants } from "#/components/ui/button";
 import { WorkExperience } from "#/components/work-experience";
 import {
 	education,
@@ -27,246 +14,155 @@ import {
 } from "#/lib/portfolio-data";
 import { cn } from "#/lib/utils";
 
-export const Route = createFileRoute("/experience")({ component: Experience });
+export const Route = createFileRoute("/experience")({
+	head: () => ({
+		meta: [
+			{ title: "Experience & Selected Work | Ifeoluwa Adebowale" },
+			{
+				name: "description",
+				content:
+					"Ifeoluwa Adebowale’s engineering experience across Idealab, Interswitch, full-stack contracting, and product teams. Explore contributions, technologies, and selected work.",
+			},
+		],
+	}),
+	component: Experience,
+});
 
 function Experience() {
-	const [projectCarouselApi, setProjectCarouselApi] = useState<CarouselApi>();
-	const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
-
-	useEffect(() => {
-		if (!projectCarouselApi) return;
-
-		const updateSelectedProject = () => {
-			setSelectedProjectIndex(projectCarouselApi.selectedScrollSnap());
-		};
-
-		updateSelectedProject();
-		projectCarouselApi.on("select", updateSelectedProject);
-		projectCarouselApi.on("reInit", updateSelectedProject);
-
-		return () => {
-			projectCarouselApi.off("select", updateSelectedProject);
-			projectCarouselApi.off("reInit", updateSelectedProject);
-		};
-	}, [projectCarouselApi]);
-
 	return (
 		<div id="top">
-			<section className="px-4 pt-26 pb-20 sm:px-6">
-				<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-					<motion.div
-						className="lg:sticky lg:top-24 lg:self-start"
-						initial={{ opacity: 0, y: 24 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, ease: "easeOut" }}
-					>
-						<p className="text-muted-foreground text-sm uppercase tracking-[0.28em]">
+			<section className="px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+				<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+					<div className="lg:sticky lg:top-28 lg:self-start">
+						<p className="text-xs uppercase tracking-[0.2em] text-primary">
 							Experience
 						</p>
-						<h1 className="mt-4 text-4xl font-black tracking-tight sm:text-6xl">
-							The work behind the range.
+						<h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+							The work behind
+							<br />
+							the engineering.
 						</h1>
-						<p className="mt-5 text-muted-foreground leading-8">
-							I have worked across product engineering, platform reliability,
-							data-heavy dashboards, migrations, internal tooling, and AI
-							integrations. This is the practical version of the resume: what I
-							owned, where I helped teams move faster, and the tools I can bring
-							into a senior role.
+						<p className="mt-5 text-base leading-8 text-muted-foreground">
+							Product engineering at Idealab. Production reliability at
+							Interswitch. Full-stack delivery for startups and business teams.
+							Here’s what I contributed and the systems I worked on.
 						</p>
-						<p className="mt-4 text-muted-foreground text-sm leading-7">
-							Currently: {profile.role}, building managed-service software and
-							multi-tenant insurance systems.
-						</p>
-
-						<GlowCardGrid
-							borderWidth={1}
-							className="mt-8 block"
-							iconOpacity={0.14}
-						>
+						<div className="mt-6 flex flex-wrap gap-3">
+							<a
+								href="#projects"
+								className={cn(
+									buttonVariants({ variant: "outline" }),
+									"rounded-full normal-case tracking-normal",
+								)}
+							>
+								Selected work{" "}
+								<ArrowDown aria-hidden="true" className="size-4" />
+							</a>
+							<a
+								href={profile.resume}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={cn(
+									buttonVariants({ variant: "ghost" }),
+									"rounded-full normal-case tracking-normal",
+								)}
+							>
+								<FileText aria-hidden="true" className="size-4" />
+								View resume
+								<span className="sr-only"> (opens in a new tab)</span>
+							</a>
+						</div>
+						<GlowCardGrid className="mt-8 block" iconOpacity={0.2}>
 							<HoverGlowCard
-								className="p-5"
-								hoverLift={false}
 								icon={education.icon}
-								iconSize={24}
-								iconWrapperClassName="mb-5"
+								glowColor="var(--glow-violet)"
+								className="p-5"
+								iconWrapperClassName="mb-4"
 							>
-								<div>
-									<h2 className="font-black">{education.school}</h2>
-									<p className="mt-1 text-muted-foreground text-sm">
-										{education.degree}
-									</p>
-								</div>
-								<div className="mt-4 flex flex-wrap gap-2 text-muted-foreground text-xs">
-									<span className="rounded-full border border-border bg-background/50 px-3 py-1">
-										{education.period}
-									</span>
-									<span className="rounded-full border border-border bg-background/50 px-3 py-1">
-										{education.location}
-									</span>
-								</div>
+								<p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
+									Education
+								</p>
+								<h2 className="font-bold">{education.school}</h2>
+								<p className="mt-2 text-sm text-muted-foreground">
+									{education.degree}
+								</p>
+								<p className="mt-3 text-xs text-muted-foreground">
+									{education.period} · {education.location}
+								</p>
 							</HoverGlowCard>
 						</GlowCardGrid>
-					</motion.div>
-
-					<motion.div
-						initial={{ opacity: 0, y: 24 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
-					>
-						<GlowCardGrid borderWidth={1} className="block" iconOpacity={0.1}>
-							<HoverGlowCard
-								className="p-3 sm:p-5"
-								hoverLift={false}
-								iconSize={22}
-								iconWrapperClassName="mb-5"
-								disableHoverGlow={true}
-							>
-								<WorkExperience
-									className="rounded-lg bg-background/55 px-1 backdrop-blur-xl sm:px-3"
-									experiences={workExperiences}
-								/>
-							</HoverGlowCard>
-						</GlowCardGrid>
-					</motion.div>
+					</div>
+					<div className="glass-panel min-w-0 p-4 sm:p-6">
+						<h2 className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+							Professional experience
+						</h2>
+						<p className="mb-5 text-xs text-muted-foreground">
+							Expand each role to read my contributions.
+						</p>
+						<WorkExperience
+							className="bg-transparent px-0"
+							experiences={workExperiences}
+						/>
+					</div>
 				</div>
-
-				<GlowCardGrid
-					borderWidth={1}
-					className="mx-auto mt-18 grid max-w-6xl gap-4 md:grid-cols-3 pt-20"
-					iconOpacity={0.18}
-				>
-					{skillGroups.map((group, index) => (
-						<motion.div
-							initial={{ opacity: 0, y: 18 }}
-							key={group.title}
-							transition={{ duration: 0.45, delay: index * 0.07 }}
-							viewport={{ once: true, amount: 0.2 }}
-							whileInView={{ opacity: 1, y: 0 }}
-						>
-							<HoverGlowCard className="p-5" icon={group.icon} iconSize={22}>
-								<h2 className="font-black">{group.title}</h2>
+			</section>
+			<section
+				id="projects"
+				className="border-t border-border px-4 py-16 sm:px-6 sm:py-20"
+			>
+				<div className="mx-auto max-w-6xl">
+					<p className="text-xs uppercase tracking-[0.2em] text-primary">
+						Selected work
+					</p>
+					<h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+						Systems I’ve built and supported.
+					</h2>
+					<p className="mb-8 mt-4 max-w-2xl leading-7 text-muted-foreground">
+						A closer look at my contributions across product delivery, data,
+						infrastructure, and AI integration.
+					</p>
+					<GlowCardGrid className="md:grid-cols-2 lg:grid-cols-3">
+						{[...projects.slice(1, 4), projects[0], ...projects.slice(4)].map(
+							(project) => (
+								<ProjectCard key={project.id} project={project} />
+							),
+						)}
+					</GlowCardGrid>
+				</div>
+			</section>
+			<section id="skills" className="px-4 py-16 sm:px-6 sm:py-20">
+				<div className="mx-auto max-w-6xl">
+					<p className="text-xs uppercase tracking-[0.2em] text-primary">
+						Technical toolkit
+					</p>
+					<h2 className="mb-8 mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+						Tools I work with.
+					</h2>
+					<GlowCardGrid>
+						{skillGroups.map((group, index) => (
+							<HoverGlowCard
+								key={group.title}
+								icon={group.icon}
+								glowColor={
+									["var(--primary)", "var(--glow-teal)", "var(--glow-violet)"][
+										index
+									]
+								}
+							>
+								<h3 className="text-xl font-bold">{group.title}</h3>
 								<ul className="mt-5 flex flex-wrap gap-2">
 									{group.items.map((item) => (
 										<li
-											className="rounded-md border border-border bg-background/45 px-2.5 py-1.5 text-muted-foreground text-xs"
 											key={item}
+											className="rounded-md border border-border bg-background/60 px-2.5 py-1.5 text-xs text-muted-foreground"
 										>
 											{item}
 										</li>
 									))}
 								</ul>
 							</HoverGlowCard>
-						</motion.div>
-					))}
-				</GlowCardGrid>
-			</section>
-
-			<section className="px-4 py-24 sm:px-6">
-				<div className="mx-auto max-w-6xl">
-					<motion.div
-						className="mb-20 flex flex-col justify-between gap-6 md:flex-row md:items-end"
-						initial={{ opacity: 0, y: 24 }}
-						transition={{ duration: 0.6, ease: "easeOut" }}
-						viewport={{ once: true, amount: 0.25 }}
-						whileInView={{ opacity: 1, y: 0 }}
-					>
-						<div>
-							<p className="text-muted-foreground text-sm uppercase tracking-[0.28em]">
-								Selected project patterns
-							</p>
-							<h2 className="mt-4 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
-								Systems I have shipped, stabilized, redesigned, or rebuilt.
-							</h2>
-						</div>
-					</motion.div>
-
-					<GlowCardGrid
-						borderWidth={1}
-						className="block bg-background shadow-[28px_0_48px_color-mix(in_oklch,var(--background),transparent_20%)]"
-						iconOpacity={0.16}
-					>
-						<Carousel
-							className="relative px-2 py-8 md:px-12"
-							opts={{ align: "center", loop: true }}
-							setApi={setProjectCarouselApi}
-						>
-							<div className="pointer-events-none absolute inset-y-10 left-0 z-20 w-24 bg-linear-to-r from-background via-background/80 to-transparent md:w-32" />
-							<div className="pointer-events-none absolute inset-y-10 right-0 z-20 w-24 bg-linear-to-l from-background via-background/80 to-transparent md:w-32" />
-							<CarouselContent className="-ml-4 items-stretch py-6">
-								{projects.map((project, index) => {
-									const isActive = index === selectedProjectIndex;
-
-									return (
-										<CarouselItem
-											className="basis-[82%] pl-4 sm:basis-[72%] md:basis-[58%] lg:basis-[44%]"
-											key={project.title}
-										>
-											<motion.div
-												animate={{
-													filter: isActive ? "blur(0px)" : "blur(0.2px)",
-													opacity: isActive ? 1 : 0.58,
-													scale: isActive ? 1 : 0.88,
-												}}
-												className="h-full origin-center"
-												transition={{
-													type: "spring",
-													stiffness: 260,
-													damping: 28,
-												}}
-											>
-												<HoverGlowCard
-													className={cn(
-														"flex min-h-107.5 flex-col p-6 shadow-2xl transition-shadow md:min-h-115",
-														isActive
-															? "border-primary/30 shadow-primary/15"
-															: "shadow-black/5",
-													)}
-													icon={project.icon ?? <BriefcaseBusinessIcon />}
-													iconSize={20}
-												>
-													<div className="mb-6">
-														<span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary text-xs">
-															{project.type}
-														</span>
-													</div>
-													<h3 className="text-2xl font-black">
-														{project.title}
-													</h3>
-													<p className="mt-4 flex-1 text-muted-foreground text-sm leading-7">
-														{project.description}
-													</p>
-													<p className="mt-5 flex items-start gap-2 text-sm leading-6">
-														<CheckCircleIcon className="mt-0.5 size-4 shrink-0 text-primary" />
-														<span>{project.impact}</span>
-													</p>
-													<ul className="mt-6 flex flex-wrap gap-2">
-														{project.tags.map((tag) => (
-															<li
-																className="rounded-md bg-muted px-2.5 py-1 text-muted-foreground text-xs"
-																key={tag}
-															>
-																{tag}
-															</li>
-														))}
-													</ul>
-												</HoverGlowCard>
-											</motion.div>
-										</CarouselItem>
-									);
-								})}
-							</CarouselContent>
-							<CarouselPrevious className="inset-y-auto left-3 top-1/2 z-30 size-14 -translate-y-1/2 rounded-full border-primary/25 bg-background/80 shadow-2xl shadow-black/15 backdrop-blur-xl hover:border-primary/40 hover:bg-primary hover:text-primary-foreground disabled:opacity-40 md:left-0 [&_svg]:size-6" />
-							<CarouselNext className="inset-y-auto top-1/2 right-3 z-30 size-14 -translate-y-1/2 rounded-full border-primary/25 bg-background/80 shadow-2xl shadow-black/15 backdrop-blur-xl hover:border-primary/40 hover:bg-primary hover:text-primary-foreground disabled:opacity-40 md:right-0 [&_svg]:size-6" />
-						</Carousel>
+						))}
 					</GlowCardGrid>
-
-					<div className="mt-20 flex justify-center gap-3 md:hidden">
-						<span className="inline-flex items-center gap-2 text-muted-foreground text-xs uppercase tracking-[0.2em]">
-							<ArrowLeftIcon className="size-3" />
-							Swipe
-							<ArrowRightIcon className="size-3" />
-						</span>
-					</div>
 				</div>
 			</section>
 		</div>

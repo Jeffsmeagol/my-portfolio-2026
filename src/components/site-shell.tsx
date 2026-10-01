@@ -1,84 +1,82 @@
-import { motion } from "motion/react";
-import type { ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { ArrowUp, ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { MotionConfig, useReducedMotion } from "motion/react";
+import { cloneElement, type ReactNode, useRef } from "react";
 import { GlowCardGrid } from "#/components/glow-card-grid";
-import { HoverGlowCard } from "#/components/hover-glow-card";
+import {
+	type AnimatedIconHandle,
+	HoverGlowCard,
+} from "#/components/hover-glow-card";
 import { ThemeToggle } from "#/components/theme-toggle";
-import { AArrowUpIcon } from "#/components/ui/a-arrow-up";
-import { ArrowUpRightIcon } from "#/components/ui/arrow-up-right";
-import { MapPinIcon } from "#/components/ui/map-pin";
-import { buttonVariants } from "#/components/ui/button";
 import { contactLinks, profile } from "#/lib/portfolio-data";
 import { cn } from "#/lib/utils";
 
-const navItems = [
-	{ label: "Home", to: "/" },
-	{ label: "Experience", to: "/experience" },
-] as const;
-
 export function SiteShell({ children }: { children: ReactNode }) {
 	const location = useLocation();
-
 	return (
-		<div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
-			<div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_20%_10%,color-mix(in_oklch,var(--primary),transparent_95%),transparent_28rem),radial-gradient(circle_at_82%_5%,color-mix(in_oklch,var(--chart-2),transparent_95%),transparent_26rem),linear-gradient(135deg,transparent_0%,color-mix(in_oklch,var(--muted),transparent_80%)_100%)]" />
-			<div className="pointer-events-none fixed inset-0 z-0 bg-background/5 backdrop-blur-[1.5px]" />
-			<div className="pointer-events-none fixed inset-3 z-0 rounded-[2rem] border border-white/10 bg-white/6 shadow-2xl shadow-black/5 backdrop-blur-md dark:border-white/5 dark:bg-white/2" />
-			<div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(90deg,color-mix(in_oklch,var(--foreground),transparent_96%),transparent_1px),linear-gradient(0deg,color-mix(in_oklch,var(--foreground),transparent_98%),transparent_1px)] opacity-25 bg-size-[72px_72px]" />
-			<div className="sticky top-0 z-50 shrink-0 pt-6">
-				{/* <div className="pointer-events-none absolute inset-x-0 -top-6 bottom-0 -z-10 max-w-5xl mx-auto" /> */}
-				<header className="mx-auto flex h-16 max-w-5xl items-center justify-between">
-					<nav className="relative flex w-full items-center justify-between gap-2 glass-nav px-3 py-2.5">
+		<MotionConfig reducedMotion="user">
+			<div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
+				<a
+					href="#main-content"
+					className="sr-only fixed left-4 top-4 z-100 rounded-lg bg-foreground p-3 text-background focus:not-sr-only focus:fixed"
+				>
+					Skip to content
+				</a>
+				<div
+					aria-hidden="true"
+					className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_10%,color-mix(in_oklch,var(--primary),transparent_95%),transparent_28rem),radial-gradient(circle_at_82%_5%,color-mix(in_oklch,var(--glow-violet),transparent_97%),transparent_26rem)]"
+				/>
+				<header className="sticky top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
+					<nav
+						aria-label="Main navigation"
+						className="glass-nav mx-auto flex max-w-240 items-center justify-between gap-2 p-2 sm:px-3"
+					>
 						<Link
 							aria-label="Ifeoluwa Adebowale home"
-							className="group flex items-center gap-3"
+							className="flex shrink-0 items-center gap-3 rounded-lg"
 							to="/"
 						>
 							<img
 								src="/favicon.svg"
-								alt="Ifeoluwa Adebowale"
-								className="flex size-9 items-center justify-center rounded-full border border-primary/20 bg-primary/10"
+								alt=""
+								width={36}
+								height={36}
+								className="size-9 rounded-full border border-primary/20 bg-primary/10"
 							/>
-							<span className="hidden leading-none sm:block">
-								<span className="block font-semibold">
-									Ifeoluwa Adebowale
+							<span className="hidden sm:block">
+								<span className="block text-sm font-semibold">
+									{profile.name}
 								</span>
-								<span className="block text-muted-foreground text-xs">
+								<span className="block text-xs text-muted-foreground">
 									Senior full-stack engineer
 								</span>
 							</span>
 						</Link>
-
-						<div className="flex items-center gap-2">
-							<div className="glass-pill p-1 shadow-sm flex">
-								{navItems.map((item) => (
+						<div className="flex items-center gap-1 sm:gap-2">
+							<div className="glass-pill flex p-1">
+								{[
+									{ label: "Home", to: "/" },
+									{ label: "Experience", to: "/experience" },
+								].map((item) => (
 									<Link
-										className={cn(
-											"relative overflow-hidden rounded-full px-4 py-2 text-xs uppercase tracking-widest transition-colors",
-											location.pathname === item.to
-												? "text-background hover:text-background"
-												: "text-muted-foreground hover:text-foreground",
-										)}
 										key={item.to}
 										to={item.to}
+										aria-current={
+											location.pathname === item.to ? "page" : undefined
+										}
+										className={cn(
+											"rounded-full px-2.5 py-2.5 text-xs font-medium sm:px-4",
+											location.pathname === item.to
+												? "bg-foreground text-background"
+												: "text-muted-foreground hover:text-foreground",
+										)}
 									>
-										{location.pathname === item.to ? (
-											<motion.span
-												className="absolute inset-0 rounded-full bg-foreground"
-												layoutId="portfolio-active-nav-pill"
-												transition={{
-													type: "spring",
-													stiffness: 500,
-													damping: 35,
-												}}
-											/>
-										) : null}
-										<span className="relative z-10">{item.label}</span>
+										{item.label}
 									</Link>
 								))}
 								<a
-									className="rounded-full px-4 py-2 text-muted-foreground text-xs uppercase tracking-widest transition-colors hover:text-foreground"
 									href="#contact"
+									className="rounded-full px-2.5 py-2.5 text-xs font-medium text-muted-foreground hover:text-foreground sm:px-4"
 								>
 									Contact
 								</a>
@@ -87,88 +85,113 @@ export function SiteShell({ children }: { children: ReactNode }) {
 						</div>
 					</nav>
 				</header>
+				<main
+					id="main-content"
+					tabIndex={-1}
+					className="relative z-10 outline-none"
+				>
+					{children}
+				</main>
+				<Footer />
 			</div>
-
-			<main className="relative z-10">{children}</main>
-			<Footer />
-		</div>
+		</MotionConfig>
 	);
 }
 
 function Footer() {
 	return (
 		<footer
-			className="relative z-10 border-foreground/10 mt-30 border-t bg-background/10 p-4 backdrop-blur-xl sm:px-6"
 			id="contact"
+			className="relative z-10 mt-8 border-t border-border px-4 pb-8 pt-14 sm:px-6"
 		>
-			<motion.div
-				className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.8fr]"
-				initial={{ opacity: 0, y: 24 }}
-				transition={{ duration: 0.6, ease: "easeOut" }}
-				viewport={{ once: true, amount: 0.2 }}
-				whileInView={{ opacity: 1, y: 0 }}
-			>
+			<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
 				<div>
-					<p className="mb-4 flex items-center gap-2 text-muted-foreground text-sm [&_svg]:size-4">
-						<MapPinIcon className="size-4" />
+					<p className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+						<MapPin aria-hidden="true" className="size-4" />
 						{profile.location}
 					</p>
-					<h2 className="max-w-2xl text-3xl font-black tracking-tight sm:text-4xl">
-						Building something complex that needs a calm senior engineer?
+					<h2 className="max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
+						Let’s talk about your team
+						<br />
+						and what you’re building.
 					</h2>
-					<p className="mt-5 max-w-xl text-muted-foreground text-sm leading-7 sm:text-base">
-						I can help turn unclear product goals into shipped software, clean
-						up legacy systems, lead implementation across the stack, and bring
-						AI, cloud, data, and product judgment into the same room.
+					<p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+						For engineering opportunities or a conversation about my work, email
+						me with a little context about the role, product, and team.
 					</p>
-				</div>
-
-				<GlowCardGrid borderWidth={1} className="block" iconOpacity={0.14}>
-					<HoverGlowCard
-						className="grid content-start gap-3 p-4"
-						hoverLift={false}
-						iconSize={20}
-						iconWrapperClassName="mb-2 size-10"
+					<a
+						href={`mailto:${profile.email}`}
+						className="mt-6 inline-flex items-center gap-2 font-medium text-primary link-underline"
 					>
-						{contactLinks.map((link) => (
-							<a
-								className={cn(
-									buttonVariants({ variant: "outline" }),
-									"h-auto justify-between rounded-lg border-white/10 bg-background/35 px-4 py-3 normal-case tracking-normal backdrop-blur-xl",
-								)}
-								href={link.href}
-								key={link.label}
-								rel="noreferrer"
-								target={link.href.startsWith("http") ? "_blank" : undefined}
-							>
-								<span className="flex items-center gap-2 text-left">
-									<span className="[&_svg]:size-4">{link.icon}</span>
-									<span>
-										{/* <span className="block font-semibold text-sm">
-											{link.label}
-										</span> */}
-										<span className="block text-muted-foreground text-xs">
-											{link.value}
-										</span>
-									</span>
-								</span>
-								<ArrowUpRightIcon className="size-4" />
-							</a>
-						))}
+						<Mail aria-hidden="true" className="size-4" />
+						{profile.email}
+					</a>
+				</div>
+				<GlowCardGrid className="block" iconOpacity={0.2}>
+					<HoverGlowCard className="p-3 sm:p-4" glowColor="var(--glow-teal)">
+						<div className="grid gap-2">
+							{contactLinks.map((link) => (
+								<ContactLink key={link.label} link={link} />
+							))}
+						</div>
 					</HoverGlowCard>
 				</GlowCardGrid>
-			</motion.div>
-
-			<a
-				className="group mx-auto mt-4 flex w-fit items-center gap-2 text-muted-foreground text-xs uppercase tracking-[0.3em] transition-colors hover:text-foreground"
-				href="#top"
-			>
-				<AArrowUpIcon
-					className="transition-transform group-hover:-translate-y-1"
-					size={18}
-				/>
-				Back to top
-			</a>
+			</div>
+			<div className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center justify-between gap-4 border-t border-border pt-6 text-xs text-muted-foreground">
+				<p>{profile.name} · Built with React & TypeScript</p>
+				<a
+					href="#main-content"
+					className="inline-flex items-center gap-2 rounded-md py-2 hover:text-foreground"
+				>
+					Back to top <ArrowUp aria-hidden="true" className="size-4" />
+				</a>
+			</div>
 		</footer>
+	);
+}
+
+function ContactLink({ link }: { link: (typeof contactLinks)[number] }) {
+	const iconRef = useRef<AnimatedIconHandle>(null);
+	const interaction = useRef({ hovered: false, focused: false });
+	const reducedMotion = useReducedMotion();
+
+	function updateAnimation(kind: "hovered" | "focused", active: boolean) {
+		const wasActive =
+			interaction.current.hovered || interaction.current.focused;
+		interaction.current[kind] = active;
+		const isActive = interaction.current.hovered || interaction.current.focused;
+		if (isActive === wasActive) return;
+		if (isActive && !reducedMotion) iconRef.current?.startAnimation();
+		else iconRef.current?.stopAnimation();
+	}
+
+	return (
+		<a
+			href={link.href}
+			onMouseEnter={() => updateAnimation("hovered", true)}
+			onMouseLeave={() => updateAnimation("hovered", false)}
+			onFocus={() => updateAnimation("focused", true)}
+			onBlur={() => updateAnimation("focused", false)}
+			target={link.href.startsWith("http") ? "_blank" : undefined}
+			rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+			className="flex min-w-0 items-center gap-3 rounded-xl border border-border bg-background/55 px-3 py-3 transition-colors hover:bg-muted"
+		>
+			<span
+				aria-hidden="true"
+				className="shrink-0 text-muted-foreground [&_svg]:size-5"
+			>
+				{cloneElement(link.icon, { ref: iconRef })}
+			</span>
+			<span className="min-w-0 flex-1">
+				<span className="block text-sm font-medium">{link.label}</span>
+				<span className="mt-0.5 block break-all text-xs text-muted-foreground">
+					{link.value}
+				</span>
+			</span>
+			<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" />
+			{link.href.startsWith("http") && (
+				<span className="sr-only">(opens in a new tab)</span>
+			)}
+		</a>
 	);
 }

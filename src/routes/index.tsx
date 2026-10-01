@@ -1,177 +1,230 @@
-import { LightningIcon } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import {
+	ArrowDown,
+	ArrowRight,
+	ArrowUpRight,
+	FileText,
+	MapPin,
+} from "lucide-react";
 import { GlowCardGrid } from "#/components/glow-card-grid";
 import { HoverGlowCard } from "#/components/hover-glow-card";
+import { ProjectCard } from "#/components/project-card";
 import { BotIcon } from "#/components/ui/bot";
 import { BriefcaseBusinessIcon } from "#/components/ui/briefcase-business";
-import { ArrowRightIcon } from "#/components/ui/arrow-right";
 import { buttonVariants } from "#/components/ui/button";
-import { focusAreas, heroStats, profile } from "#/lib/portfolio-data";
+import { focusAreas, heroStats, profile, projects } from "#/lib/portfolio-data";
 import { cn } from "#/lib/utils";
-import { ActivityIcon } from "#/components/ui/activity";
 
 export const Route = createFileRoute("/")({ component: Home });
+const featuredProjects = projects
+	.filter((project) =>
+		[
+			"aktuarial-analytics",
+			"tenant-operations",
+			"interswitch-reliability",
+		].includes(project.id),
+	)
+	.sort(
+		(a, b) =>
+			[
+				"aktuarial-analytics",
+				"tenant-operations",
+				"interswitch-reliability",
+			].indexOf(a.id) -
+			[
+				"aktuarial-analytics",
+				"tenant-operations",
+				"interswitch-reliability",
+			].indexOf(b.id),
+	);
 
 function Home() {
 	return (
 		<div id="top">
-			<section className="relative flex min-h-screen items-center px-4 pt-16 pb-14 sm:px-6">
-				<div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-					<motion.div
-						initial={{ opacity: 0, y: 28 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.7, ease: "easeOut" }}
-					>
-						<p className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 font-medium text-primary text-xs uppercase tracking-[0.25em]">
-							<LightningIcon className="size-4" />
-							6+ years across product, fintech, cloud, and reliability
+			<section className="px-4 pb-16 pt-14 sm:px-6 sm:pt-20 lg:pb-20">
+				<div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+					<div>
+						<p className="mb-5 text-sm font-medium text-primary">
+							{profile.name}{" "}
+							<span className="mx-2 text-muted-foreground">/</span> Software
+							Engineer
 						</p>
-						<h1 className="max-w-4xl text-5xl font-black tracking-tight text-balance sm:text-6xl lg:text-7xl">
-							I build serious software for teams that need senior ownership.
+						<h1 className="max-w-2xl text-4xl font-black leading-[1.08] tracking-tight text-balance sm:text-6xl">
+							Product thinking.
+							<br />
+							Full-stack delivery.
+							<br />
+							<span className="text-primary">Production care.</span>
 						</h1>
-						<p className="mt-6 max-w-2xl text-muted-foreground text-pretty text-lg leading-8">
+						<p className="mt-6 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
 							{profile.summary}
 						</p>
-
+						<p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+							<MapPin aria-hidden="true" className="size-4" />
+							{profile.location} · Full-stack & platform engineering
+						</p>
 						<div className="mt-8 flex flex-wrap gap-3">
-							<Link
+							<a
+								href="#selected-work"
 								className={cn(
 									buttonVariants({ size: "lg" }),
 									"rounded-full normal-case tracking-normal",
 								)}
-								to="/experience"
 							>
-								View experience
-								<ArrowRightIcon data-icon="inline-end" />
-							</Link>
+								Explore my work{" "}
+								<ArrowDown aria-hidden="true" className="size-4" />
+							</a>
 							<a
+								href={profile.resume}
+								target="_blank"
+								rel="noopener noreferrer"
 								className={cn(
 									buttonVariants({ size: "lg", variant: "outline" }),
-									"rounded-full border-border bg-background/60 normal-case tracking-normal backdrop-blur-xl",
+									"rounded-full normal-case tracking-normal",
 								)}
-								href="#contact"
 							>
-								Contact me
+								<FileText aria-hidden="true" className="size-4" />
+								View resume{" "}
+								<span className="sr-only">(opens in a new tab)</span>
 							</a>
 						</div>
-					</motion.div>
-
-					<motion.div
-						className="glass-panel border-foreground/0 relative overflow-hidden p-5"
-						initial={{ opacity: 0, scale: 0.96, y: 20 }}
-						animate={{ opacity: 1, scale: 1, y: 0 }}
-						transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-					>
-						<div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_oklch,var(--primary),transparent_72%),transparent_38%),radial-gradient(circle_at_82%_18%,color-mix(in_oklch,var(--chart-1),transparent_68%),transparent_12rem)]" />
-						<div className="relative grid gap-4">
-							<div className="rounded-lg border border-white/10 bg-background/55 p-5 backdrop-blur-xl">
-								<div className="mb-12 flex items-start justify-between">
-									<div>
-										<p className="text-muted-foreground text-xs uppercase tracking-[0.25em]">
-											Current focus
-										</p>
-										<h2 className="mt-3 text-2xl font-black">
-											Full-stack product systems
-										</h2>
-									</div>
-									<ActivityIcon className="text-primary" size={36} />
-								</div>
-								<div className="grid grid-cols-3 gap-3">
-									{heroStats.map((stat) => (
-										<div
-											className="rounded-md border border-border/60 bg-background/45 p-3"
-											key={stat.label}
-										>
-											<p className="font-black text-2xl">{stat.value}</p>
-											<p className="mt-2 text-muted-foreground text-xs leading-5">
-												{stat.label}
-											</p>
-										</div>
-									))}
-								</div>
-							</div>
-
-							<GlowCardGrid
-								borderWidth={1}
-								cardRadius={8}
-								className="grid gap-3 sm:grid-cols-2 md:grid-cols-2"
-								iconOpacity={0.18}
+						<div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+							<a className="link-underline" href={`mailto:${profile.email}`}>
+								Let’s talk
+							</a>
+							<a
+								className="inline-flex items-center gap-1 link-underline"
+								href={profile.github}
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								<HoverGlowCard
-									className="rounded-lg border-white/10 bg-foreground p-5 text-background shadow-none dark:bg-foreground"
-									icon={<BriefcaseBusinessIcon />}
-									iconClassName="text-background"
-									iconSize={24}
-								>
-									<p className="text-sm leading-6">
-										Multi-tenant products, internal tools, analytics dashboards,
-										APIs, migrations, and backend business logic.
-									</p>
-								</HoverGlowCard>
-								<HoverGlowCard
-									className="rounded-lg border-white/10 bg-primary p-5 text-primary-foreground shadow-none"
-									icon={<BotIcon />}
-									iconClassName="text-primary-foreground"
-									iconSize={24}
-								>
-									<p className="text-sm leading-6">
-										AI integration, cloud/serverless workflows, mobile delivery,
-										and production reliability habits.
-									</p>
-								</HoverGlowCard>
-							</GlowCardGrid>
+								GitHub <ArrowUpRight aria-hidden="true" className="size-3.5" />
+								<span className="sr-only">(opens in a new tab)</span>
+							</a>
+							<a
+								className="inline-flex items-center gap-1 link-underline"
+								href={profile.linkedin}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								LinkedIn{" "}
+								<ArrowUpRight aria-hidden="true" className="size-3.5" />
+								<span className="sr-only">(opens in a new tab)</span>
+							</a>
 						</div>
-					</motion.div>
+					</div>
+					<div className="space-y-4">
+						<div className="glass-panel p-6 sm:p-7">
+							<p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+								Currently at Idealab
+							</p>
+							<h2 className="mt-3 text-2xl font-bold tracking-tight">
+								Making complex operations easier to run.
+							</h2>
+							<p className="mt-4 text-sm leading-7 text-muted-foreground">
+								Building Aktuarial’s insurance workflows, analytics, and
+								internal tenant tooling across the interface, API, and data
+								layers.
+							</p>
+							<dl className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
+								{heroStats.map((stat) => (
+									<div key={stat.value}>
+										<dt className="text-xl font-bold sm:text-2xl">
+											{stat.value}
+										</dt>
+										<dd className="mt-2 text-xs leading-5 text-muted-foreground">
+											{stat.label}
+										</dd>
+									</div>
+								))}
+							</dl>
+						</div>
+						<GlowCardGrid
+							className="grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2"
+							cardRadius={16}
+						>
+							<HoverGlowCard icon={<BriefcaseBusinessIcon />} className="p-5">
+								<h3 className="font-semibold">Built for real operations</h3>
+								<p className="mt-3 text-sm leading-6 text-muted-foreground">
+									Multi-tenant products, analytics, APIs, migrations, and
+									business logic.
+								</p>
+							</HoverGlowCard>
+							<HoverGlowCard
+								icon={<BotIcon />}
+								glowColor="var(--glow-teal)"
+								className="p-5"
+							>
+								<h3 className="font-semibold">Ready for production</h3>
+								<p className="mt-3 text-sm leading-6 text-muted-foreground">
+									Cloud workflows, AI integrations, observability, and recovery.
+								</p>
+							</HoverGlowCard>
+						</GlowCardGrid>
+					</div>
 				</div>
 			</section>
-
-			<section className="px-4 py-30 sm:px-6">
+			<section
+				id="selected-work"
+				className="border-t border-border px-4 py-16 sm:px-6 sm:py-20"
+			>
 				<div className="mx-auto max-w-6xl">
-					<motion.div
-						className="mb-10 max-w-3xl"
-						initial={{ opacity: 0, y: 24 }}
-						transition={{ duration: 0.6, ease: "easeOut" }}
-						viewport={{ once: true, amount: 0.35 }}
-						whileInView={{ opacity: 1, y: 0 }}
-					>
-						<p className="text-muted-foreground text-sm uppercase tracking-[0.28em]">
+					<div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+						<div>
+							<p className="text-xs uppercase tracking-[0.2em] text-primary">
+								Selected work
+							</p>
+							<h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+								Real systems. Clear ownership.
+							</h2>
+							<p className="mt-3 max-w-xl text-muted-foreground">
+								A few examples of the product and infrastructure work I bring to
+								a team.
+							</p>
+						</div>
+						<Link
+							to="/experience"
+							hash="projects"
+							className="flex items-center gap-2 text-sm font-medium link-underline"
+						>
+							All work & experience{" "}
+							<ArrowRight aria-hidden="true" className="size-4" />
+						</Link>
+					</div>
+					<GlowCardGrid>
+						{featuredProjects.map((project) => (
+							<ProjectCard key={project.id} project={project} />
+						))}
+					</GlowCardGrid>
+				</div>
+			</section>
+			<section className="px-4 py-16 sm:px-6 sm:py-20">
+				<div className="mx-auto max-w-6xl">
+					<div className="mb-8 max-w-2xl">
+						<p className="text-xs uppercase tracking-[0.2em] text-primary">
 							What I bring
 						</p>
-						<h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
-							I can move from interface detail to architecture decisions without
-							losing the thread.
+						<h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+							From interface detail to system design.
 						</h2>
-					</motion.div>
-
-					<GlowCardGrid
-						borderWidth={1}
-						className="grid gap-4 md:grid-cols-3 pt-20"
-						iconOpacity={0.2}
-					>
+					</div>
+					<GlowCardGrid>
 						{focusAreas.map((area, index) => (
-							<motion.div
-								initial={{ opacity: 0, y: 22 }}
+							<HoverGlowCard
 								key={area.title}
-								transition={{
-									duration: 0.5,
-									delay: index * 0.08,
-									ease: "easeOut",
-								}}
-								viewport={{ once: true, amount: 0.25 }}
-								whileInView={{ opacity: 1, y: 0 }}
+								icon={area.icon}
+								iconSize={28}
+								glowColor={
+									["var(--primary)", "var(--glow-teal)", "var(--glow-violet)"][
+										index
+									]
+								}
 							>
-								<HoverGlowCard
-									icon={area.icon}
-									iconSize={36}
-									iconWrapperClassName="mb-10 mx-auto flex size-16 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary"
-								>
-									<h3 className="text-xl font-black text-center">{area.title}</h3>
-									<p className="mt-4 text-muted-foreground text-sm leading-7">
-										{area.description}
-									</p>
-								</HoverGlowCard>
-							</motion.div>
+								<h3 className="text-xl font-bold">{area.title}</h3>
+								<p className="mt-4 text-sm leading-7 text-muted-foreground">
+									{area.description}
+								</p>
+							</HoverGlowCard>
 						))}
 					</GlowCardGrid>
 				</div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { InfinityIcon } from "@phosphor-icons/react";
 import { differenceInMonths, parse } from "date-fns";
+import { useReducedMotion } from "motion/react";
 import {
 	type ComponentProps,
 	cloneElement,
@@ -40,6 +40,7 @@ export type ExperiencePositionItemType = {
 	};
 	/** The type of employment (e.g., "Full-time", "Part-time", "Contract") */
 	employmentType?: string;
+	location?: string;
 	/** A brief description of the position or responsibilities */
 	description?: string;
 	/** An icon representing the position */
@@ -150,6 +151,7 @@ export type ExperiencePositionItemProps = {
 export function ExperiencePositionItem({
 	position,
 }: ExperiencePositionItemProps) {
+	const reducedMotion = useReducedMotion();
 	const chevronsUpDownIconRef = useRef<ChevronsUpDownIconHandle>(null);
 	const positionIconRef = useRef<AnimatedIconHandle | null>(null);
 
@@ -177,7 +179,7 @@ export function ExperiencePositionItem({
 	);
 
 	function startPositionIconAnimation() {
-		positionIconRef.current?.startAnimation?.();
+		if (!reducedMotion) positionIconRef.current?.startAnimation?.();
 	}
 
 	function stopPositionIconAnimation() {
@@ -223,12 +225,14 @@ export function ExperiencePositionItem({
 					</div>
 				</div>
 
-				<dl className="relative z-1 flex items-center gap-2 pl-9 text-sm text-muted-foreground">
-					{position.employmentType && (
+				<dl className="relative z-1 flex flex-wrap items-center gap-x-2 gap-y-1 pl-9 text-xs text-muted-foreground sm:text-sm">
+					{(position.employmentType || position.location) && (
 						<>
 							<div>
-								<dt className="sr-only">Employment Type</dt>
-								<dd>{position.employmentType}</dd>
+								<dt className="sr-only">
+									{position.location ? "Location" : "Employment type"}
+								</dt>
+								<dd>{position.location || position.employmentType}</dd>
 							</div>
 
 							<Separator
@@ -241,15 +245,12 @@ export function ExperiencePositionItem({
 					<div>
 						<dt className="sr-only">Employment Period</dt>
 						<dd className="flex items-center gap-0.5 tabular-nums">
-							<span>{start}</span>
+							<span>{formatPeriod(start)}</span>
 							<span className="font-mono">—</span>
 							{isOngoing ? (
-								<InfinityIcon
-									className="size-4.5 translate-y-[0.5px]"
-									aria-label="Present"
-								/>
+								<span>Present</span>
 							) : (
-								<span>{end}</span>
+								<span>{end && formatPeriod(end)}</span>
 							)}
 						</dd>
 					</div>
@@ -355,4 +356,24 @@ function parsePeriodDate(str: string, fallbackMonth: "first" | "last"): Date {
 		"MM.yyyy",
 		new Date(),
 	);
+}
+
+function formatPeriod(value: string) {
+	if (!value.includes(".")) return value;
+	const [month, year] = value.split(".");
+	const months = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	];
+	return `${months[Number(month) - 1]} ${year}`;
 }

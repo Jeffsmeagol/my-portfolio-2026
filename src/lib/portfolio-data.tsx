@@ -1,39 +1,37 @@
-import {
-	DeviceMobileIcon,
-	ShieldCheckIcon,
-} from "@phosphor-icons/react";
+import { DeviceMobileIcon, ShieldCheckIcon } from "@phosphor-icons/react";
+import { AirplayIcon } from "#/components/ui/airplay";
+import { AtSignIcon } from "#/components/ui/at-sign";
+import { BlocksIcon } from "#/components/ui/blocks";
 import { BotIcon } from "#/components/ui/bot";
+import { BoxesIcon } from "#/components/ui/boxes";
+import { BrainIcon } from "#/components/ui/brain";
 import { BriefcaseBusinessIcon } from "#/components/ui/briefcase-business";
 import { ChartLineIcon } from "#/components/ui/chart-line";
-import { GraduationCapIcon } from "#/components/ui/graduation-cap";
-import { PhoneIcon } from "#/components/ui/phone";
-import type { ExperienceItemType } from "#/components/work-experience";
 import { CloudCogIcon } from "#/components/ui/cloud-cog";
-import { BrainIcon } from "#/components/ui/brain";
-import { AtSignIcon } from "#/components/ui/at-sign";
-import { GithubIcon } from "#/components/ui/github";
-import { LinkedinIcon } from "#/components/ui/linkedin";
-import { AirplayIcon } from "#/components/ui/airplay";
-import { CpuIcon } from "#/components/ui/cpu";
-import { BoxesIcon } from "#/components/ui/boxes";
-import { BlocksIcon } from "#/components/ui/blocks";
 import { CogIcon } from "#/components/ui/cog";
-import { CreditCardIcon } from "#/components/ui/credit-card";
 import { ConnectIcon } from "#/components/ui/connect";
-import { WorkflowIcon } from "#/components/ui/workflow";
+import { CpuIcon } from "#/components/ui/cpu";
+import { CreditCardIcon } from "#/components/ui/credit-card";
+import { GithubIcon } from "#/components/ui/github";
+import { GraduationCapIcon } from "#/components/ui/graduation-cap";
 import { LaptopMinimalCheckIcon } from "#/components/ui/laptop-minimal-check";
+import { LinkedinIcon } from "#/components/ui/linkedin";
+import { PhoneIcon } from "#/components/ui/phone";
+import { WorkflowIcon } from "#/components/ui/workflow";
+import type { ExperienceItemType } from "#/components/work-experience";
 
 export const profile = {
 	name: "Ifeoluwa Adebowale",
 	role: "Senior Full-Stack Software Engineer",
 	location: "Lagos, Nigeria",
 	summary:
-		"I build and modernize serious software: multi-tenant platforms, fintech-grade workflows, dense analytics dashboards, internal operations tools, APIs, mobile apps, cloud workflows, and AI-assisted systems. I am comfortable owning delivery from product thinking to production reliability.",
+		"I build multi-tenant products, data-rich interfaces, and reliable backend systems. My work connects React and TypeScript product engineering with the operational discipline of payments infrastructure—from the first design decision to production support.",
 	email: "adebowalejeff@gmail.com",
 	phone: "+234 8149236128",
-	website: "https://adebowalejeff.com",
+	website: "https://adebowalejeff.netlify.app",
+	resume: "https://ifeoluwa-adebowale-resume.netlify.app/",
 	github: "https://github.com/Jeffsmeagol",
-	linkedin: "https://linkedin.com/in/ifeoluwa-adebowale/377779112",
+	linkedin: "https://www.linkedin.com/in/ifeoluwa-adebowale-377779112/",
 };
 
 export const contactLinks = [
@@ -57,16 +55,16 @@ export const contactLinks = [
 	},
 	{
 		label: "LinkedIn",
-		value: "linkedin.com/in/ifeoluwa-adebowale/377779112",
+		value: "ifeoluwa-adebowale-377779112",
 		href: profile.linkedin,
 		icon: <LinkedinIcon />,
 	},
 ];
 
 export const heroStats = [
-	{ value: "6+", label: "years building production systems" },
-	{ value: "99.99%", label: "uptime-minded engineering culture" },
-	{ value: "50%+", label: "performance gains on modernization work" },
+	{ value: "Product", label: "engineering at Idealab" },
+	{ value: "Full stack", label: "interfaces, APIs, and data models" },
+	{ value: "SRE", label: "production experience at Interswitch" },
 ];
 
 export const focusAreas = [
@@ -101,11 +99,11 @@ export const workExperiences: ExperienceItemType[] = [
 				id: "idealab-software-engineer",
 				title: "Software Engineer",
 				employmentPeriod: { start: "12.2025" },
-				employmentType: "Lagos, Nigeria",
+				location: "Lagos, Nigeria",
 				icon: <BlocksIcon />,
 				isExpanded: true,
 				description:
-					"I work on digital solutions and managed-service products for insurance and internal operations teams. On **Aktuarial**, a multi-tenant Insurance Brokerage Management System for brokers and agents, I have owned work across the UI, middleware, validations, business-creation logic, data-model rewrites, migrations, and backfills. I recently led a major redesign of the legacy dashboard into a dense analytics experience with multiple data segments and websocket-driven updates, and helped integrate a multi-branch model so insurance businesses can open, close, and operate across several branches.\n\nI also bootstrapped a new internal tenant-operations app used to view, support, add, investigate, and troubleshoot broker tenants and users. The work sits close to product, support, and engineering: I collaborate with senior engineers on management-prioritized delivery, while also breaking down tasks for junior engineers and interns so the team keeps moving toward the organization's goals.",
+					"Building **Aktuarial**, a multi-tenant insurance brokerage platform, and internal operations tools.\n\n- Led a legacy dashboard redesign with segmented analytics and WebSocket-driven updates.\n- Owned UI, middleware, validation, business logic, data-model changes, migrations, and backfills.\n- Helped implement multi-branch operations for brokerage businesses.\n- Bootstrapped an internal tenant-support app for user management, investigation, and troubleshooting.\n- Broke down delivery work for junior engineers and interns while collaborating with senior engineers on product priorities.",
 				skills: [
 					"Multi-tenant systems",
 					"React",
@@ -169,7 +167,7 @@ export const workExperiences: ExperienceItemType[] = [
 				id: "tv-deluxe-fullstack",
 				title: "Full-Stack Engineer",
 				employmentPeriod: { start: "04.2024", end: "07.2024" },
-				employmentType: "Lagos, Nigeria",
+				location: "Lagos, Nigeria",
 				icon: <BriefcaseBusinessIcon />,
 				description:
 					"Worked across client, admin, and backend applications, helping move product ideas into reliable services. I contributed to multi-country payment integrations, product delivery services for inventory workflows, SMS/email notification services, and deployment pipelines. The role required clean TypeScript boundaries, backend judgment, and the ability to keep several product surfaces aligned at once.",
@@ -193,10 +191,10 @@ export const workExperiences: ExperienceItemType[] = [
 				id: "interswitch-sre",
 				title: "DevOps / SRE Engineer",
 				employmentPeriod: { start: "03.2023", end: "04.2024" },
-				employmentType: "Lagos, Nigeria",
+				location: "Lagos, Nigeria",
 				icon: <ShieldCheckIcon />,
 				description:
-					"Supported critical production infrastructure inside one of Africa's major payments and fintech companies, working close to the reliability expectations of transaction-heavy financial systems. The work shaped how I think about senior engineering: a feature is not finished until it can be observed, recovered, and trusted. I helped sustain 99.99% uptime-minded operations, built Python and Bash automation that reduced MTTR, resolved performance bottlenecks with senior engineers, and contributed React interfaces that made operational workflows easier to use.\n\nThat exposure gave me practical fintech instincts around availability, incident response, secure delivery, auditability, payment-adjacent workflows, and the operational seriousness required for systems that move money or support money movement.",
+					"Supported critical production infrastructure inside one of Africa's major payments and fintech companies, working close to the reliability expectations of transaction-heavy financial systems. The work shaped how I think about senior engineering: a feature is not finished until it can be observed, recovered, and trusted. I supported availability-focused operations, built Python and Bash automation that reduced MTTR, resolved performance bottlenecks with senior engineers, and contributed React interfaces that made operational workflows easier to use.\n\nThat exposure gave me practical fintech instincts around availability, incident response, secure delivery, auditability, payment-adjacent workflows, and the operational seriousness required for systems that move money or support money movement.",
 				skills: [
 					"Azure",
 					"AWS",
@@ -225,7 +223,7 @@ export const workExperiences: ExperienceItemType[] = [
 				id: "fireswitch-frontend",
 				title: "Frontend Engineer",
 				employmentPeriod: { start: "01.2021", end: "11.2022" },
-				employmentType: "Ibadan, Nigeria",
+				location: "Ibadan, Nigeria",
 				icon: <DeviceMobileIcon />,
 				description:
 					"Built responsive, accessible React and TypeScript interfaces from design to production, with enough backend exposure to understand how UI decisions affect APIs and data flows. I improved page-load performance through code splitting and lazy loading, helped build REST integrations with Node.js and Express.js, and strengthened the product foundation that later made full-stack ownership natural.",
@@ -338,26 +336,35 @@ export const education = {
 
 export const projects = [
 	{
-		title: "Fintech Reliability Exposure",
+		id: "interswitch-reliability",
+		context: "Interswitch Group · DevOps / SRE Engineer",
+		glowColor: "var(--glow-violet)",
+		title: "Production Reliability at Interswitch",
 		type: "Payments & Infrastructure",
 		description:
 			"Worked inside Interswitch's production environment, supporting infrastructure expectations common to payment systems: uptime, observability, incident response, secure change, and operational recovery.",
 		impact:
-			"Built the fintech discipline needed for transaction-heavy products where trust, traceability, and recovery matter.",
+			"Contributed automation, incident response, and operational interfaces for transaction-heavy infrastructure.",
 		tags: ["Fintech", "Payments", "SRE", "Observability"],
 		icon: <CreditCardIcon />,
 	},
 	{
+		id: "aktuarial-analytics",
+		context: "Idealab · Software Engineer",
+		glowColor: "var(--primary)",
 		title: "Aktuarial Analytics Dashboard",
 		type: "Multi-Tenant Insurance Platform",
 		description:
 			"Redesigned a legacy dashboard into a dense analytics workspace for insurance brokers and agents, with multiple business segments, data-heavy views, and websocket-backed updates.",
 		impact:
-			"Turned a dated operational surface into a stronger decision cockpit for brokerage teams.",
+			"Brought segmented analytics and live updates into the brokerage team’s daily workflow.",
 		tags: ["React", "TypeScript", "WebSockets", "Analytics"],
 		icon: <ChartLineIcon />,
 	},
 	{
+		id: "tenant-operations",
+		context: "Idealab · Software Engineer",
+		glowColor: "var(--glow-teal)",
 		title: "Internal Tenant Operations App",
 		type: "Support & Platform Tooling",
 		description:
@@ -368,6 +375,9 @@ export const projects = [
 		icon: <LaptopMinimalCheckIcon />,
 	},
 	{
+		id: "multi-branch",
+		context: "Idealab · Software Engineer",
+		glowColor: "var(--glow-violet)",
 		title: "Multi-Branch Brokerage System",
 		type: "Business Logic & Data Model",
 		description:
@@ -378,6 +388,9 @@ export const projects = [
 		icon: <ConnectIcon />,
 	},
 	{
+		id: "modernization",
+		context: "Independent contracting · Full-stack development",
+		glowColor: "var(--primary)",
 		title: "Legacy System Modernization",
 		type: "Full-Stack Migration",
 		description:
@@ -388,6 +401,9 @@ export const projects = [
 		icon: <WorkflowIcon />,
 	},
 	{
+		id: "ai-integrations",
+		context: "Independent contracting · Full-stack development",
+		glowColor: "var(--glow-teal)",
 		title: "AI-Assisted Product Integrations",
 		type: "AI Systems",
 		description:
