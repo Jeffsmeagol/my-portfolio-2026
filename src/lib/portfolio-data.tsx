@@ -62,9 +62,9 @@ export const contactLinks = [
 ];
 
 export const heroStats = [
-	{ value: "Product", label: "engineering at Idealab" },
-	{ value: "Full stack", label: "interfaces, APIs, and data models" },
-	{ value: "SRE", label: "production experience at Interswitch" },
+	{ value: "Product", label: "Engineering at Idealab" },
+	{ value: "Full stack", label: "Interfaces, APIs, and data models" },
+	{ value: "SRE", label: "Production experience at Interswitch" },
 ];
 
 export const focusAreas = [
